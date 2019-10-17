@@ -2,28 +2,32 @@
 #include <GLFW/glfw3.h>
 
 #include "Main.h"
-#include "HelloWindow.h"
+#include "HelloShaders.h"
 
 #include <iostream>
 
 // Vertex shader source code
-const char *vertexShaderSource = "#version 330 core\n"
+const char *helloVertexShaderSource = "#version 330 core\n"
 "layout(location = 0) in vec3 aPos;\n"
+"layout(location = 1) in vec3 aColor;\n"
+"out vec3 ourColor;\n"
 "void main()\n"
 "{\n"
-"gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"gl_Position = vec4(aPos, 1.0);\n"
+"ourColor = aColor;\n"
 "}\n";
 
 // Fragment shader source code
-const char *fragmentShaderSource = "#version 330 core\n"
+const char *helloFragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec3 ourColor;\n"
 "void main()\n"
 "{\n"
-"FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
+"FragColor = vec4(ourColor, 1.0f);\n"
 "}\n";
 
 
-int helloWindow() {
+int helloShaders() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -33,7 +37,7 @@ int helloWindow() {
 	// Attempt to create window
 	GLFWwindow* window = glfwCreateWindow(800, 600, "YEET", NULL, NULL);
 	if (window == NULL) {
-	std::cout << "Failed to create GLFW window" << std::endl;
+		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -50,7 +54,7 @@ int helloWindow() {
 	unsigned int vertexShader;
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	glShaderSource(vertexShader, 1, &helloVertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 
 	// Check for shader compilation errors
@@ -69,7 +73,7 @@ int helloWindow() {
 	// Create and compile fragment shader
 	unsigned int fragmentShader;
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+	glShaderSource(fragmentShader, 1, &helloFragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
 
 	// Check for fragment shader compilation errors
@@ -104,90 +108,57 @@ int helloWindow() {
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
-	// Triangle
-	//float vertices[] = {
-	//	-0.5f, -0.5f, 0.0f,
-	//	0.5f, -0.5f, 0.0f,
-	//	0.0f, 0.5f, 0.0f
-	//};
-
-	// Rectangle (two triangles)
-	//float vertices[] = {
-	//	0.5f,  0.5f, 0.0f,  // top right
-	//	0.5f, -0.5f, 0.0f,  // bottom right
-	//	-0.5f, -0.5f, 0.0f,  // bottom left
-	//	-0.5f,  0.5f, 0.0f   // top left 
-	//};
-	//unsigned int indices[] = {
-	//	0, 1, 3, // first triangle
-	//	1, 2, 3 // second triangle
-	//};
-
 	float vertices[] = {
-		// first triangle
-		-0.45f, -0.25f, 0.0f,  // left 
-		-0.0f, -0.25f, 0.0f,  // right
-		-0.225f, 0.25f, 0.0f,  // top 
-		// second triangle
-		 0.0f, -0.25f, 0.0f,  // left
-		 0.45f, -0.25f, 0.0f,  // right
-		 0.225f, 0.25f, 0.0f,   // top
-		// third triangle
-		-0.225f, 0.25f, 0.0f,
-		0.225f, 0.25f, 0.0f,
-		0.0f, 0.75f, 0.0f
-
+		// positions         // colors
+		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
 	};
 
 	unsigned int VBO; // vertex buffer object
 	unsigned int VAO; // vertex array object
 
-	// For rectangles
-	//unsigned int EBO;
-
 	// Gen buffers and arrays
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-
-	//For rectangles
-	//glGenBuffers(1, &EBO);
 
 	// Bind buffers and arrays, bind VAO FIRST, then VBO, then EBO
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	//For rectangles
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+
+	// Color Attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// Uncomment to draw in wireframe mode
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	 
+
 	// RENDER LOOP, render the window as dark turquoise
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		// default color
-		//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
 		glClearColor(0.68f, 0.36f, 0.13f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Draw our triangle
+		
 		glUseProgram(shaderProgram);
+
+		// Update shader uniform
+		float timeValue = glfwGetTime();
+		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+		int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+
+		// Draw our triangle
 		glBindVertexArray(VAO);
-
-		// For triangles
 		glDrawArrays(GL_TRIANGLES, 0, 9);
-
-		// For rectangles
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
 
 	glfwTerminate();
