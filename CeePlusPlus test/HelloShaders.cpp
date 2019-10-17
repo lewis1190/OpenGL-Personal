@@ -51,64 +51,6 @@ int helloShaders() {
 		return -1;
 	}
 
-	// Create and attempt to compile vertex shader
-	//unsigned int vertexShader;
-	//vertexShader = glCreateShader(GL_VERTEX_SHADER);
-
-	//glShaderSource(vertexShader, 1, &helloVertexShaderSource, NULL);
-	//glCompileShader(vertexShader);
-
-	//// Check for shader compilation errors
-	//int success;
-	//char infoLog[512];
-	//glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-
-	//if (!success) {
-	//	glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-	//	std::cout << "ERROR::SHADER::VERTEX::COMPILATION::FAILED::\n" << infoLog << std::endl;
-	//}
-	//else {
-	//	std::cout << "Vertex Shader Initialised!!" << std::endl;
-	//}
-
-	// Create and compile fragment shader
-	/*unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &helloFragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);*/
-
-	// Check for fragment shader compilation errors
-	/*glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION::FAILED\n" << infoLog << std::endl;
-	}
-	else {
-		std::cout << "Fragment Shader Initialised!!" << std::endl;
-	};*/
-
-	// Create shader program and link both shaders
-	//unsigned int shaderProgram;
-	//shaderProgram = glCreateProgram();
-	//glAttachShader(shaderProgram, vertexShader);
-	//glAttachShader(shaderProgram, fragmentShader);
-	//glLinkProgram(shaderProgram);
-
-	//// Check if linked
-	//glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	//if (!success) {
-	//	glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-	//	std::cout << "ERROR::SHADER::LINK::FAILED\n" << infoLog << std::endl;
-	//}
-	//else {
-	//	std::cout << "Shaders Linked!!" << std::endl;
-	//};
-
-	//glUseProgram(shaderProgram);
-
-	/*glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);*/
-
 	Shader ourShader("vertshader.vert", "fragshader.frag");
 
 	float vertices[] = {
