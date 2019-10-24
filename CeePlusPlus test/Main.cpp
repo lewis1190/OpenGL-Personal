@@ -1,13 +1,17 @@
 #include "Main.h"
 #include "HelloWindow.h"
 #include "HelloShaders.h"
+#include "HelloTextures.h"
 
 int main()
 {
 	/*if (helloWindow() == 1)
 		exit(EXIT_FAILURE);*/
 
-	if (helloShaders() == 1)
+	/*if (helloShaders() == 1)
+		exit(EXIT_FAILURE);*/
+
+	if (helloTextures() == 1)
 		exit(EXIT_FAILURE);
 
 	exit(EXIT_SUCCESS);

@@ -16,10 +16,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="vertshader.vert">
+    <None Include="HelloShadersfragshader.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="fragshader.frag">
+    <None Include="HelloShadersvertshader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="HelloTexturesfragshader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="HelloTexturesvertshader.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -36,6 +42,12 @@
     <ClCompile Include="HelloShaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HelloTextures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -50,5 +62,16 @@
     <ClInclude Include="shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HelloTextures.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -121,21 +121,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="fragshader.frag" />
+    <None Include="HelloShadersfragshader.frag" />
+    <None Include="HelloShadersvertshader.vert" />
+    <None Include="HelloTexturesfragshader.frag" />
+    <None Include="HelloTexturesvertshader.vert" />
     <None Include="packages.config" />
-    <None Include="vertshader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LIBS-INCLUDES\glad\src\glad.c" />
     <ClCompile Include="HelloShaders.cpp" />
+    <ClCompile Include="HelloTextures.cpp" />
     <ClCompile Include="HelloWindow.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="TextureLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelloShaders.h" />
+    <ClInclude Include="HelloTextures.h" />
     <ClInclude Include="HelloWindow.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

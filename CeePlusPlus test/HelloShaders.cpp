@@ -51,7 +51,7 @@ int helloShaders() {
 		return -1;
 	}
 
-	Shader ourShader("vertshader.vert", "fragshader.frag");
+	Shader ourShader("HelloShadervertshader.vert", "HelloShaderfragshader.frag");
 
 	float vertices[] = {
 		// positions         // colors
