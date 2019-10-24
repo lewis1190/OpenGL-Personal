@@ -77,9 +77,9 @@ int helloTextures() {
 	glEnableVertexAttribArray(2);
 
 	// Load and create a texture
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	unsigned int texture1, texture2;
+	glGenTextures(1, &texture1);
+	glBindTexture(GL_TEXTURE_2D, texture1);
 	 
 	// Set how the texture wrapping's done
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -91,9 +91,10 @@ int helloTextures() {
 
 	// Load image, create texture, gen mipmaps
 	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true);
 
+	// Load in Texture 1
 	unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
-
 	if (data) 
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -101,28 +102,54 @@ int helloTextures() {
 	}
 	else
 	{
-		std::cout << "Failed to load texture" << std::endl;
+		std::cout << "Failed to load texture1" << std::endl;
+	}
+	stbi_image_free(data);
+
+	glGenTextures(1, &texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+	// Load in Texture 2
+	data = stbi_load("awesomeface.png", &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture2" << std::endl;
 	}
 	stbi_image_free(data);
 
 	// Uncomment to draw in wireframe mode
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	ourShader.use();
+	glUniform1i(glGetUniformLocation(ourShader.ID, "texture1"), 0);
+	ourShader.setInt("texture2", 1);
+
 	// RENDER LOOP, render the window as dark turquoise
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
-		glfwSwapBuffers(window);
-		glfwPollEvents();
 
 		glClearColor(0.68f, 0.36f, 0.13f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw our triangle
-		ourShader.use();
-		ourShader.setFloat("someUniform", 1.0f);
-		glBindTexture(GL_TEXTURE_2D, texture);
+
+		// First texture
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture1);
+
+		// Second Texture
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, texture2);
+
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		glfwSwapBuffers(window);
+		glfwPollEvents();
 	}
 
 	glfwTerminate();
