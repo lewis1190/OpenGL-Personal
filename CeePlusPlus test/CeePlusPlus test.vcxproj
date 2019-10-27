@@ -125,12 +125,15 @@
     <None Include="HelloShadersvertshader.vert" />
     <None Include="HelloTexturesfragshader.frag" />
     <None Include="HelloTexturesvertshader.vert" />
+    <None Include="HelloTransformfragshader.frag" />
+    <None Include="HelloTransformvertshader.vert" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LIBS-INCLUDES\glad\src\glad.c" />
     <ClCompile Include="HelloShaders.cpp" />
     <ClCompile Include="HelloTextures.cpp" />
+    <ClCompile Include="HelloTransformation.cpp" />
     <ClCompile Include="HelloWindow.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="TextureLoad.cpp" />
@@ -138,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="HelloShaders.h" />
     <ClInclude Include="HelloTextures.h" />
+    <ClInclude Include="HelloTransformation.h" />
     <ClInclude Include="HelloWindow.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="shader.h" />

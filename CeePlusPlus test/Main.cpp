@@ -2,6 +2,7 @@
 #include "HelloWindow.h"
 #include "HelloShaders.h"
 #include "HelloTextures.h"
+#include "HelloTransformation.h"
 
 int main()
 {
@@ -11,7 +12,10 @@ int main()
 	/*if (helloShaders() == 1)
 		exit(EXIT_FAILURE);*/
 
-	if (helloTextures() == 1)
+	/*if (helloTextures() == 1)
+		exit(EXIT_FAILURE);*/
+
+	if (helloTransformation() == 1)
 		exit(EXIT_FAILURE);
 
 	exit(EXIT_SUCCESS);
