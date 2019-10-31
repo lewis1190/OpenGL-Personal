@@ -34,6 +34,12 @@
     <None Include="HelloTransformfragshader.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="HelloCoordinatesfragshader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="HelloCoordinatesvertshader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LIBS-INCLUDES\glad\src\glad.c">
@@ -57,6 +63,9 @@
     <ClCompile Include="HelloTransformation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HelloCoordinates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -78,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HelloTransformation.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HelloCoordinates.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include "HelloShaders.h"
 #include "HelloTextures.h"
 #include "HelloTransformation.h"
+#include "HelloCoordinates.h"
 
 int main()
 {
@@ -15,7 +16,10 @@ int main()
 	/*if (helloTextures() == 1)
 		exit(EXIT_FAILURE);*/
 
-	if (helloTransformation() == 1)
+	/*if (helloTransformation() == 1)
+		exit(EXIT_FAILURE);*/
+
+	if (helloCoordinates() == 1)
 		exit(EXIT_FAILURE);
 
 	exit(EXIT_SUCCESS);

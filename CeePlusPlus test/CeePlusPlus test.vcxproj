@@ -121,6 +121,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="HelloCoordinatesfragshader.frag" />
+    <None Include="HelloCoordinatesvertshader.vert" />
     <None Include="HelloShadersfragshader.frag" />
     <None Include="HelloShadersvertshader.vert" />
     <None Include="HelloTexturesfragshader.frag" />
@@ -131,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LIBS-INCLUDES\glad\src\glad.c" />
+    <ClCompile Include="HelloCoordinates.cpp" />
     <ClCompile Include="HelloShaders.cpp" />
     <ClCompile Include="HelloTextures.cpp" />
     <ClCompile Include="HelloTransformation.cpp" />
@@ -139,6 +142,7 @@
     <ClCompile Include="TextureLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HelloCoordinates.h" />
     <ClInclude Include="HelloShaders.h" />
     <ClInclude Include="HelloTextures.h" />
     <ClInclude Include="HelloTransformation.h" />
