@@ -220,7 +220,11 @@ int helloCoordinates() {
 			glm::mat4 model = glm::mat4(1.0f);
 			model = glm::translate(model, cubePositions[i]);
 			float angle = 20.0f * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
+			// Swap these out to have them all rotating or stationary
+			//model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f + (20.0f * i)), glm::vec3(0.5f, 1.0f, 0.0f));
+
 			ourShader.setMat4("model", model);
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
