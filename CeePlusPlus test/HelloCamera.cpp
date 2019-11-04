@@ -188,7 +188,7 @@ int helloCamera() {
 		glClearColor(0.68f, 0.36f, 0.13f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Draw our triangle
+		// Draw our cube
 
 		// First texture
 		glActiveTexture(GL_TEXTURE0);
@@ -198,22 +198,37 @@ int helloCamera() {
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
-		// Model test
-		//model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-
-		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(45.0f), (float)(800 / 600), 0.1f, 100.0f);
-
-		int viewLoc = glGetUniformLocation(ourShader.ID, "view");
-		ourShader.setMat4("view", view);
 
 		int projectionLoc = glGetUniformLocation(ourShader.ID, "projection");
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		ourShader.setMat4("projection", projection);
 
+		// Camera init
+		// Position
+		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+
+		// Direction
+		glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+
+		// Right axis
+		glm::vec3 upVec = glm::vec3(0.0f, 1.0f, 0.0f);
+
+		float radius = 10.0f;
+		float camX = sin(glfwGetTime()) * radius;
+		float camZ = cos(glfwGetTime()) * radius;
+
+		glm::mat4 view = glm::mat4(1.0f);
+
+		// Old view
+		//view = glm::lookAt(cameraPos, cameraTarget, upVec);
+
+		// New view
+		view = glm::lookAt(glm::vec3(camX, 0.0, camZ), cameraTarget, upVec);
+
+		ourShader.setMat4("view", view);
+		
 		glBindVertexArray(VAO);
 		for (unsigned int i = 0; i < 10; i++)
 		{
@@ -229,9 +244,6 @@ int helloCamera() {
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
-
-		//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
