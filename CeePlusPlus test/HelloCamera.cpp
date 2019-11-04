@@ -30,8 +30,11 @@ float pitch = 0.0f;
 
 bool firstMouse = true;
 
+float fov = 45.0f;
+
 void processCameraInput(GLFWwindow *window);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
 int helloCamera() {
 	glfwInit();
@@ -52,6 +55,7 @@ int helloCamera() {
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouseCallback);
+	glfwSetScrollCallback(window, scrollCallback);
 
 	// Attempt to init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -227,7 +231,7 @@ int helloCamera() {
 		glBindTexture(GL_TEXTURE_2D, texture2);
 
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), (float)(800 / 600), 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(fov), (float)(800 / 600), 0.1f, 100.0f);
 
 		int projectionLoc = glGetUniformLocation(ourShader.ID, "projection");
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
@@ -314,5 +318,13 @@ void mouseCallback(GLFWwindow *window, double xpos, double ypos) {
 	target.y = sin(glm::radians(pitch));
 	target.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
 	cameraTarget = glm::normalize(target);
+}
 
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	if (fov >= 1.0f && fov <= 45.0f)
+		fov -= yoffset;
+	if (fov <= 1.0f)
+		fov = 1.0f;
+	if (fov >= 45.0f)
+		fov = 45.0f;
 }
