@@ -221,9 +221,9 @@ int helloCoordinates() {
 			model = glm::translate(model, cubePositions[i]);
 			float angle = 20.0f * i;
 
-			// Swap these out to have them all rotating or stationary
-			//model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f + (20.0f * i)), glm::vec3(0.5f, 1.0f, 0.0f));
+			// First line rotates them to different offsets, the second line rotates them over time at the same speed
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 			ourShader.setMat4("model", model);
 
