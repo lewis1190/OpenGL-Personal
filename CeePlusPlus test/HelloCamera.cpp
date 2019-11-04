@@ -21,7 +21,17 @@ glm::vec3 upVec			= glm::vec3(0.0f, 1.0f, 0.0f);	// Up Vector
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+// Mouse offsets
+float lastX = 400;
+float lastY = 300;
+
+float yaw = -90.0f;
+float pitch = 0.0f;
+
+bool firstMouse = true;
+
 void processCameraInput(GLFWwindow *window);
+void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 
 int helloCamera() {
 	glfwInit();
@@ -39,6 +49,9 @@ int helloCamera() {
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mouseCallback);
 
 	// Attempt to init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -264,4 +277,42 @@ void processCameraInput(GLFWwindow* window) {
 
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		cameraPos += glm::normalize(glm::cross(cameraTarget, upVec)) * cameraSpeed;
+}
+
+void mouseCallback(GLFWwindow *window, double xpos, double ypos) {
+
+	if (firstMouse) {
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // y coordinates are bottom to top, we reverse them
+
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.05f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	// Calculate pitch vector
+
+
+	// Calculate direction vector
+	glm::vec3 target;
+	target.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	target.y = sin(glm::radians(pitch));
+	target.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraTarget = glm::normalize(target);
+
 }
