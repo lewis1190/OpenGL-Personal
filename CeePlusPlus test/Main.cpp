@@ -4,6 +4,7 @@
 #include "HelloTextures.h"
 #include "HelloTransformation.h"
 #include "HelloCoordinates.h"
+#include "HelloCamera.h"
 
 int main()
 {
@@ -19,7 +20,10 @@ int main()
 	/*if (helloTransformation() == 1)
 		exit(EXIT_FAILURE);*/
 
-	if (helloCoordinates() == 1)
+	/*if (helloCoordinates() == 1)
+		exit(EXIT_FAILURE);*/
+
+	if (helloCamera() == 1)
 		exit(EXIT_FAILURE);
 
 	exit(EXIT_SUCCESS);

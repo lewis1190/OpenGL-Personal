@@ -6,13 +6,13 @@
 #include <GLM/gtc/type_ptr.hpp>
 
 #include "Main.h"
-#include "HelloCoordinates.h"
+#include "HelloCamera.h"
 #include "shader.h"
 #include "stb_image.h"
 
 #include <iostream>
 
-int helloCoordinates() {
+int helloCamera() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

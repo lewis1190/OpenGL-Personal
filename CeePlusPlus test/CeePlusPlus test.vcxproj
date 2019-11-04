@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\LIBS-INCLUDES\glad\src\glad.c" />
+    <ClCompile Include="HelloCamera.cpp" />
     <ClCompile Include="HelloCoordinates.cpp" />
     <ClCompile Include="HelloShaders.cpp" />
     <ClCompile Include="HelloTextures.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="TextureLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HelloCamera.h" />
     <ClInclude Include="HelloCoordinates.h" />
     <ClInclude Include="HelloShaders.h" />
     <ClInclude Include="HelloTextures.h" />
