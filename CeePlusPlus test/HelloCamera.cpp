@@ -12,6 +12,17 @@
 
 #include <iostream>
 
+// Camera info
+glm::vec3 cameraPos		= glm::vec3(0.0f, 0.0f, 3.0f);	// Position
+glm::vec3 cameraTarget	= glm::vec3(0.0f, 0.0f, -1.0f);	// Direction / Target
+glm::vec3 upVec			= glm::vec3(0.0f, 1.0f, 0.0f);	// Up Vector
+
+// Time deltas
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
+
+void processCameraInput(GLFWwindow *window);
+
 int helloCamera() {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -183,12 +194,16 @@ int helloCamera() {
 
 	// RENDER LOOP, render the window as dark turquoise
 	while (!glfwWindowShouldClose(window)) {
+		// Calc delta time
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		processInput(window);
+		processCameraInput(window);
 
 		glClearColor(0.68f, 0.36f, 0.13f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		// Draw our cube
 
 		// First texture
 		glActiveTexture(GL_TEXTURE0);
@@ -205,27 +220,10 @@ int helloCamera() {
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		ourShader.setMat4("projection", projection);
 
-		// Camera init
-		// Position
-		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-
-		// Direction
-		glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-
-		// Right axis
-		glm::vec3 upVec = glm::vec3(0.0f, 1.0f, 0.0f);
-
-		float radius = 10.0f;
-		float camX = sin(glfwGetTime()) * radius;
-		float camZ = cos(glfwGetTime()) * radius;
-
 		glm::mat4 view = glm::mat4(1.0f);
 
-		// Old view
-		//view = glm::lookAt(cameraPos, cameraTarget, upVec);
-
 		// New view
-		view = glm::lookAt(glm::vec3(camX, 0.0, camZ), cameraTarget, upVec);
+		view = glm::lookAt(cameraPos, cameraPos + cameraTarget, upVec);
 
 		ourShader.setMat4("view", view);
 		
@@ -251,4 +249,19 @@ int helloCamera() {
 
 	glfwTerminate();
 	return 0;
+}
+
+void processCameraInput(GLFWwindow* window) {
+	float cameraSpeed = 2.5f * deltaTime;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		cameraPos += cameraSpeed * cameraTarget;
+
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		cameraPos -= cameraSpeed * cameraTarget;
+
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cameraPos -= glm::normalize(glm::cross(cameraTarget, upVec)) * cameraSpeed; // Find cross product to move along right vector
+
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cameraPos += glm::normalize(glm::cross(cameraTarget, upVec)) * cameraSpeed;
 }
