@@ -152,7 +152,7 @@ int helloCamera() {
 	glEnableVertexAttribArray(0);
 
 	// Texture Attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); // position 1, 2 coords, 5 floats per line, 3 floats across to get tex coords
 	glEnableVertexAttribArray(1);
 
 	// Load and create a texture
